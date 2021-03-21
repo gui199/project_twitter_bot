@@ -2,7 +2,7 @@
 
 Esse projeto tem o  objetivo de criar um bot do twitter para enviar aos usuários a imagem/reaction do meme desejado.
 ---
-##Esse trabalho teve como base:  
+## Esse trabalho teve como base:  
 [realpython twitter bot python tweepy](https://realpython.com/twitter-bot-python-tweepy/)
 ---
 ## Imagem:  

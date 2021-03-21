@@ -1,0 +1,2 @@
+tweepy==3.10.0
+environs==9.3.0

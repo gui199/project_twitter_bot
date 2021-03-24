@@ -140,3 +140,5 @@ cython_debug/
 # project files
 since_id.bin
 templatesmemes/
+list.bin
+filelist.bin

@@ -13,6 +13,7 @@ from  pickle_read_save import ReadSaveDate
 from datetime import datetime
 import shutil
 from pathlib import Path
+import pandas as pd
 
 # Configs
 logging.basicConfig(level=logging.INFO)
@@ -23,12 +24,14 @@ path = Path().absolute()
 # if templatesmemes folder dont exist make one
 if not path.joinpath(path, FPATH).is_dir():
     path.joinpath(path, FPATH).mkdir() 
-# check for sinceid
+# check if sinceid exist or make a copy of origin_id
 if not  path.joinpath(path, FILENAME).is_file():
     shutil.copy2("origin_id.bin", FILENAME)
 
-LISTA = ReadSaveDate.readPickle("list.bin")
-FILELIST = ReadSaveDate.readPickle("filelist.bin")
+# changed pickle to csv to store values
+dataset = pd.read_csv('/media/veracrypt1/estudar/Tweepy/project_twit/memelist.csv', sep=',', header=None, index_col=None )
+dict1 = {dataset.loc[x][0]:dataset.loc[x][1:].to_list() for x in range(len(dataset))}
+
 
 def check_mentions(api,  since_id):
     logger.info("Retrieving mentions")
@@ -39,11 +42,11 @@ def check_mentions(api,  since_id):
             continue
         
         #metodo para encontrar item da lista um na lista dois
-        img = [FILELIST[x]  for x in range(len(LISTA)) if any(item in tweet.text.lower().split(" ") for item in LISTA[x])]
-        print(img)
-        if img:
+        fileimg = [x for x, y in dict1.items() if any(item in "nazaré".lower().split(" ") for item in y) ]
+        print(fileimg)
+        if fileimg:
             logger.info(f"Answering to {tweet.user.name}")           
-            api.update_with_media(FPATH+img[0], status="Aqui vai.", in_reply_to_status_id=tweet.id,)            
+            api.update_with_media(FPATH+fileimg[0], status="Aqui vai.", in_reply_to_status_id=tweet.id,)            
         else:
             logger.info(f"Answering to {tweet.user.name}") 
             api.update_status(status="Eu não entendi o seu pedido.", in_reply_to_status_id=tweet.id,)

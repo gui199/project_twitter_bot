@@ -29,7 +29,7 @@ if not  path.joinpath(path, FILENAME).is_file():
     shutil.copy2("origin_id.bin", FILENAME)
 
 # changed pickle to csv to store values
-dataset = pd.read_csv('/media/veracrypt1/estudar/Tweepy/project_twit/memelist.csv', sep=',', header=None, index_col=None )
+dataset = pd.read_csv('memelist.csv', sep=',', header=None, index_col=None )
 dict1 = {dataset.loc[x][0]:dataset.loc[x][1:].to_list() for x in range(len(dataset))}
 
 
@@ -42,7 +42,7 @@ def check_mentions(api,  since_id):
             continue
         
         #metodo para encontrar item da lista um na lista dois
-        fileimg = [x for x, y in dict1.items() if any(item in "nazaré".lower().split(" ") for item in y) ]
+        fileimg = [x for x, y in dict1.items() if any(item in  tweet.text.lower().split(" ") for item in y) ]
         print(fileimg)
         if fileimg:
             logger.info(f"Answering to {tweet.user.name}")           

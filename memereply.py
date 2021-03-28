@@ -9,7 +9,6 @@ import tweepy
 import logging
 from config import create_api
 import time
-from  pickle_read_save import ReadSaveDate
 from datetime import datetime
 import shutil
 from pathlib import Path
@@ -60,11 +59,11 @@ def main(since_id):
         new_since_id = check_mentions(api,  since_id)
         now = datetime.now()
         logger.info("Waiting... "+now.strftime("%H:%M:%S"))
-        if new_since_id != since_id:
-            ReadSaveDate.savePickle(FILENAME, new_since_id)
+        if new_since_id != since_id:            
+            pd.to_pickle(new_since_id, FILENAME)
             since_id = new_since_id
         time.sleep(60)
 
-if __name__ == "__main__":
-    since_id0 = ReadSaveDate.readPickle(FILENAME) 
+if __name__ == "__main__":    
+    since_id0 = pd.read_pickle(FILENAME)
     main(since_id0)
